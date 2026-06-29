@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ayobolu Zion , Portfolio</title>
+
+  <!-- FONTS: Syne for display headings, Inter for body text -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- SINGLE EXTERNAL STYLESHEET: All styles in one file -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ============================================================
+       NAVBAR
+       Fixed at the top. Links are anchor tags (#section-id) that
+       scroll to sections within this single page, not separate files.
+       JS adds .scrolled on scroll and .active to the current section link.
+  ============================================================ -->
+  <nav class="navbar" id="navbar">
+    <a href="#home" class="nav-logo">AZ<span class="logo-dot">.</span></a>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <!-- Each href is an anchor pointing to a section id on this page -->
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home"     class="nav-link active" data-section="home">Home</a></li>
+      <li><a href="#about"    class="nav-link"        data-section="about">About</a></li>
+      <li><a href="#projects" class="nav-link"        data-section="projects">Projects</a></li>
+      <li><a href="#planner"  class="nav-link"        data-section="planner">Planner</a></li>
+      <li><a href="#contact"  class="nav-link"        data-section="contact">Contact</a></li>
+    </ul>
+
+    <!-- PERSISTENT AUDIO PLAYER in navbar -->
+    <div class="nav-audio" id="navAudio">
+      <audio id="bgAudio" loop>
+        <source src="audio/background.mp3" type="audio/mpeg" />
+      </audio>
+      <button class="audio-toggle" id="audioToggle" aria-label="Play background music">
+        <span class="audio-icon" id="audioIcon">&#9654;</span>
+        <span class="audio-track-name">Psalm 8 , Phil Wickham</span>
+      </button>
+      <div class="audio-wave" id="audioWave" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ============================================================
+       MAIN: All sections live here as a single scrollable document.
+       No page reloads. Audio persists. Nav links scroll to each section.
+  ============================================================ -->
+  <main id="main-content">
+
+
+    <!-- ==========================================================
+         SECTION 1: HOME
+         Full viewport hero. Letter-split name, typewriter, rotating ring.
+    ========================================================== -->
+    <section class="section sec-home" id="home" aria-label="Home">
+      <div class="hero-content">
+        <p class="hero-greeting fade-up" style="--delay:0.1s">Hello, I'm</p>
+        <h1 class="hero-name split-text">Ayobolu Zion</h1>
+        <div class="hero-typewriter-row fade-up" style="--delay:1.3s">
+          <span>I build</span>
+          <span class="typewriter-word" id="typewriterWord">websites</span>
+        </div>
+        <p class="hero-description fade-up" style="--delay:1.6s">
+          Building digital experiences for Nigerian businesses, from real estate to construction.
+          Currently on the path to becoming a certified fullstack developer.
+        </p>
+        <div class="hero-cta fade-up" style="--delay:1.9s">
+          <a href="#projects" class="btn btn-primary">View My Work</a>
+          <a href="#contact"  class="btn btn-secondary">Get In Touch</a>
+        </div>
+      </div>
+
+      <!-- ORBITAL PHOTO ASSEMBLY: Photo clipped to a circle, orbiting text ring around it.
+           Positioned on the right side of the hero section.
+           The orbit animation is pure CSS @keyframes (no library).
+           Text on the outer ring uses SVG textPath to follow the circle curve. -->
+      <div class="hero-orbital" aria-hidden="true">
+
+        <!-- OUTER RING: SVG with text running along a circular path -->
+        <svg class="orbital-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+
+          <!-- Define the circular path the text follows.
+               textPath href="#orbitPath" links the text to this path. -->
+          <defs>
+            <path id="orbitPath" d="M 200,200 m -155,0 a 155,155 0 1,1 310,0 a 155,155 0 1,1 -310,0"/>
+          </defs>
+
+          <!-- OUTER DASHED RING: decorative circle -->
+          <circle cx="200" cy="200" r="175" stroke="rgba(0,229,160,0.2)"
+            stroke-width="1" stroke-dasharray="4 8" fill="none"/>
+
+          <!-- ORBIT TRACK: the ring the text sits on -->
+          <circle cx="200" cy="200" r="155" stroke="rgba(0,229,160,0.15)"
+            stroke-width="1" fill="none"/>
+
+          <!-- INNER DECORATIVE RING -->
+          <circle cx="200" cy="200" r="112" stroke="rgba(0,229,160,0.1)"
+            stroke-width="1" stroke-dasharray="2 6" fill="none"/>
+
+          <!-- ORBITING TEXT: follows the circular path, rotates via CSS animation on the whole SVG -->
+          <text font-family="Syne, sans-serif" font-size="12" font-weight="600"
+            fill="rgba(0,229,160,0.75)" letter-spacing="3">
+            <textPath href="#orbitPath">
+              WEB DEVELOPER &nbsp;&nbsp;&nbsp; AI AUTOMATION &nbsp;&nbsp;&nbsp; BUILDER &nbsp;&nbsp;&nbsp; WEB DEVELOPER &nbsp;&nbsp;&nbsp; AI AUTOMATION &nbsp;&nbsp;&nbsp; BUILDER &nbsp;&nbsp;&nbsp;
+            </textPath>
+          </text>
+
+          <!-- ORBIT DOTS: small glowing dots on the ring at 4 compass points -->
+          <circle cx="200" cy="45"  r="3" fill="var(--mint)" opacity="0.8"/>
+          <circle cx="355" cy="200" r="3" fill="var(--mint)" opacity="0.8"/>
+          <circle cx="200" cy="355" r="3" fill="var(--mint)" opacity="0.8"/>
+          <circle cx="45"  cy="200" r="3" fill="var(--mint)" opacity="0.8"/>
+
+        </svg>
+
+        <!-- PHOTO CIRCLE: clipped image centred inside the orbital rings -->
+        <div class="orbital-photo-wrap">
+          <img src="images/zion-photo.png" alt="Ayobolu Zion" class="orbital-photo"/>
+        </div>
+
+      </div>
+
+      <!-- SKILLS STRIP: Appears at the bottom of the home section -->
+      <div class="skills-strip" aria-label="Skills">
+        <div class="skills-track" id="skillsTrack">
+          <ul class="skills-list">
+            <li class="skill-tag">HTML5</li>
+            <li class="skill-tag">CSS3</li>
+            <li class="skill-tag">JavaScript</li>
+            <li class="skill-tag">PHP</li>
+            <li class="skill-tag">React</li>
+            <li class="skill-tag">Node.js</li>
+            <li class="skill-tag">AI Automation</li>
+            <li class="skill-tag">Context Engineering</li>
+            <li class="skill-tag">n8n</li>
+            <li class="skill-tag">Netlify</li>
+            <li class="skill-tag">Git &amp; GitHub</li>
+            <li class="skill-tag">Responsive Design</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- SCROLL NUDGE: Tells users to scroll down -->
+      <div class="scroll-indicator fade-up" style="--delay:2.3s" aria-hidden="true">
+        <span class="scroll-label">Scroll</span>
+        <div class="scroll-line"></div>
+      </div>
+
+    </section>
+
+
+    <!-- ==========================================================
+         SECTION TRANSITION 1 TO 2
+         A full-height sticky spacer. As the user scrolls through it,
+         the About card is pinned at the centre and CSS animates it in.
+         This is the Matthew Park "pinned reveal" effect, done in CSS only.
+    ========================================================== -->
+    <div class="transition-spacer" id="trans-1-2" aria-hidden="true">
+      <!-- The transition label appears during the scroll between sections -->
+      <div class="transition-label">
+        <span class="tl-line"></span>
+        <span class="tl-text">About Me</span>
+        <span class="tl-line"></span>
+      </div>
+    </div>
+
+
+    <!-- ==========================================================
+         SECTION 2: ABOUT
+         Card slides up from below as you scroll into this section.
+         Entry animation: translateY(80px) -> 0, opacity 0 -> 1.
+    ========================================================== -->
+    <section class="section sec-about section-reveal slide-up" id="about" aria-label="About Me">
+      <div class="container">
+
+        <div class="about-grid">
+
+          <!-- LEFT: Nigeria map SVG showing journey from Port-Harcourt to Ogun State.
+               Pure inline SVG, no image file needed.
+               Globe grid lines sit behind the map outline.
+               Two glowing dots mark Port-Harcourt and Sagamu/Ogun State.
+               An animated arc connects them like a travel path. -->
+          <div class="about-photo-col">
+            <div class="nigeria-map-wrap">
+              <svg class="nigeria-map-svg" viewBox="0 0 340 380"
+                xmlns="http://www.w3.org/2000/svg" aria-label="Map of Nigeria showing Port-Harcourt and Ogun State">
+
+                <!-- GLOBE GRID LINES: Horizontal and vertical lines simulating
+                     a geographic coordinate grid behind the map -->
+                <g class="map-grid" opacity="0.12" stroke="var(--mint)" stroke-width="0.5">
+                  <!-- Horizontal lines (latitude) -->
+                  <line x1="0" y1="60"  x2="340" y2="60"/>
+                  <line x1="0" y1="110" x2="340" y2="110"/>
+                  <line x1="0" y1="160" x2="340" y2="160"/>
+                  <line x1="0" y1="210" x2="340" y2="210"/>
+                  <line x1="0" y1="260" x2="340" y2="260"/>
+                  <line x1="0" y1="310" x2="340" y2="310"/>
+                  <!-- Vertical lines (longitude) -->
+                  <line x1="50"  y1="0" x2="50"  y2="380"/>
+                  <line x1="110" y1="0" x2="110" y2="380"/>
+                  <line x1="170" y1="0" x2="170" y2="380"/>
+                  <line x1="230" y1="0" x2="230" y2="380"/>
+                  <line x1="290" y1="0" x2="290" y2="380"/>
+                  <!-- Subtle arcs simulating globe curvature -->
+                  <ellipse cx="170" cy="190" rx="160" ry="40" fill="none"/>
+                  <ellipse cx="170" cy="190" rx="160" ry="90" fill="none"/>
+                  <ellipse cx="170" cy="190" rx="160" ry="140" fill="none"/>
+                </g>
+
+                <!-- NIGERIA OUTLINE: Simplified but geographically accurate SVG path.
+                     Nigeria is roughly rectangular with a wider north and a southern
+                     delta coast. The path traces the border clockwise. -->
+                <path class="nigeria-outline"
+                  d="M 80,40
+                     L 120,30 L 160,25 L 200,28 L 240,35 L 270,50
+                     L 290,70 L 300,95 L 295,115 L 305,135
+                     L 300,155 L 290,165 L 280,175 L 275,190
+                     L 265,195 L 260,210 L 255,220 L 260,235
+                     L 250,245 L 240,255 L 230,260 L 220,270
+                     L 210,280 L 200,295 L 190,310 L 185,325
+                     L 175,335 L 165,325 L 158,310 L 150,295
+                     L 140,280 L 128,265 L 118,255 L 108,245
+                     L 100,235 L 95,225 L 88,215 L 80,205
+                     L 72,195 L 65,185 L 60,170 L 55,155
+                     L 50,140 L 48,120 L 50,100 L 55,80
+                     L 65,60 Z"
+                  fill="rgba(0,229,160,0.06)"
+                  stroke="rgba(0,229,160,0.5)"
+                  stroke-width="1.5"
+                  stroke-linejoin="round"
+                />
+
+                <!-- ANIMATED ARC: Curved travel path from Port-Harcourt to Ogun State.
+                     M = move to start (Port-Harcourt), Q = quadratic bezier curve to Ogun.
+                     stroke-dasharray and stroke-dashoffset animate the line drawing effect. -->
+                <path class="map-arc"
+                  d="M 195,285 Q 155,220 115,230"
+                  fill="none"
+                  stroke="var(--mint)"
+                  stroke-width="1.5"
+                  stroke-dasharray="150"
+                  stroke-dashoffset="150"
+                  stroke-linecap="round"
+                />
+
+                <!-- PORT-HARCOURT DOT: Rivers State, south-east Nigeria -->
+                <!-- Outer pulse ring animates outward and fades -->
+                <circle class="map-pulse" cx="195" cy="285" r="12"
+                  fill="none" stroke="var(--mint)" stroke-width="1" opacity="0"/>
+                <!-- Inner solid dot -->
+                <circle cx="195" cy="285" r="5" fill="var(--mint)" opacity="0.9"/>
+                <!-- Label -->
+                <text x="205" y="289" font-family="Inter, sans-serif" font-size="9"
+                  fill="var(--mint)" opacity="0.85" font-weight="600">Port-Harcourt</text>
+                <text x="205" y="299" font-family="Inter, sans-serif" font-size="7.5"
+                  fill="rgba(0,229,160,0.5)">Rivers State</text>
+
+                <!-- OGUN STATE DOT: Southwest Nigeria, Sagamu area -->
+                <circle class="map-pulse map-pulse-2" cx="115" cy="230" r="12"
+                  fill="none" stroke="var(--mint)" stroke-width="1" opacity="0"/>
+                <circle cx="115" cy="230" r="5" fill="var(--mint)" opacity="0.9"/>
+                <text x="68" y="224" font-family="Inter, sans-serif" font-size="9"
+                  fill="var(--mint)" opacity="0.85" font-weight="600">Sagamu</text>
+                <text x="60" y="234" font-family="Inter, sans-serif" font-size="7.5"
+                  fill="rgba(0,229,160,0.5)">Ogun State</text>
+
+                <!-- ABUJA MARKER: Capital city for geographic reference -->
+                <circle cx="178" cy="145" r="3" fill="rgba(0,229,160,0.3)"/>
+                <text x="183" y="149" font-family="Inter, sans-serif" font-size="7.5"
+                  fill="rgba(0,229,160,0.3)">Abuja</text>
+
+                <!-- NIGERIA LABEL -->
+                <text x="155" y="95" font-family="Syne, sans-serif" font-size="10"
+                  fill="rgba(0,229,160,0.2)" font-weight="700" text-anchor="middle"
+                  letter-spacing="3">NIGERIA</text>
+
+              </svg>
+
+              <!-- CAPTION below the map -->
+              <p class="map-caption">
+                Port-Harcourt &rarr; Sagamu, 2014
+              </p>
+            </div>
+          </div>
+
+          <!-- RIGHT: Bio text, career aspirations -->
+          <div class="about-text-col">
+            <span class="eyebrow">About Me</span>
+            <h2 class="section-title">From Port-Harcourt<br/>to the web.</h2>
+
+            <p class="bio-body">
+              Born in Port-Harcourt, Rivers State, and raised in Sagamu, Ogun State since April 2014.
+              My secondary education was split between Divine Life College (JSS1-3) and Orion Academy (SS1-3),
+              where I graduated with distinctions in Physics and Mathematics.
+            </p>
+            <p class="bio-body">
+              I started coding at 13, touching HTML, CSS, JavaScript, and PHP. Today I work across
+              web development, AI context engineering, and automation, building systems for real Nigerian businesses.
+              Currently studying Cybersecurity at Miva Open University and completing the Fullstack Developer Path on Scrimba.
+            </p>
+
+            <blockquote class="aspirations-quote">
+              "I want to build digital infrastructure that African businesses actually rely on."
+            </blockquote>
+
+            <!-- SKILLS TABLE: HTML requirement (table element) -->
+            <div class="table-wrapper">
+              <table class="skills-table">
+                <caption>Technical skills by category</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Skill</th>
+                    <th scope="col">Level</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="skill-category">HTML5 / CSS3</td>
+                    <td class="skill-level-cell">
+                      <div class="skill-bar-wrap"><div class="skill-bar" style="--level:85%"></div></div>
+                      <span class="skill-level-label">Advanced</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="skill-category">JavaScript</td>
+                    <td class="skill-level-cell">
+                      <div class="skill-bar-wrap"><div class="skill-bar" style="--level:75%"></div></div>
+                      <span class="skill-level-label">Proficient</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="skill-category">AI Automation</td>
+                    <td class="skill-level-cell">
+                      <div class="skill-bar-wrap"><div class="skill-bar" style="--level:80%"></div></div>
+                      <span class="skill-level-label">Advanced</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="skill-category">React / Node.js</td>
+                    <td class="skill-level-cell">
+                      <div class="skill-bar-wrap"><div class="skill-bar" style="--level:45%"></div></div>
+                      <span class="skill-level-label">Intermediate</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="skill-category">Cybersecurity</td>
+                    <td class="skill-level-cell">
+                      <div class="skill-bar-wrap"><div class="skill-bar" style="--level:35%"></div></div>
+                      <span class="skill-level-label">Developing</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- HOBBIES LIST (HTML list requirement) -->
+            <div class="hobbies-inline">
+              <span class="eyebrow">Interests</span>
+              <ul class="hobbies-list">
+                <li>Football &amp; football finance</li>
+                <li>Video editing , YouTube (Texto channel)</li>
+                <li>Faith-based topics</li>
+                <li>Touch typing (targeting 50+ WPM)</li>
+                <li>AI tools &amp; emerging tech</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- TRANSITION 2 TO 3 -->
+    <div class="transition-spacer" id="trans-2-3" aria-hidden="true">
+      <div class="transition-label">
+        <span class="tl-line"></span>
+        <span class="tl-text">Projects</span>
+        <span class="tl-line"></span>
+      </div>
+    </div>
+
+
+    <!-- ==========================================================
+         SECTION 3: PROJECTS
+         Entry animation: rows draw in from the left one by one.
+         Uses JS-injected project rows with staggered slide-in.
+    ========================================================== -->
+    <section class="section sec-projects section-reveal slide-left" id="projects" aria-label="Projects">
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow">Selected Work</span>
+          <h2 class="section-title">Projects I've Built</h2>
+          <p class="section-subtitle">Real sites, real businesses, currently in preview on Netlify.</p>
+        </div>
+
+        <!-- JS renders project rows here -->
+        <div class="projects-list" id="projectsGrid"></div>
+
+        <!-- PROCESS TIMELINE: Horizontal scroll walk-through of the build process.
+             Each step card enters from the right as the user scrolls.
+             JS drives the active state, CSS handles the animation.
+             The timeline satisfies the multimedia/interactive requirement
+             while being genuinely useful content about the workflow. -->
+        <div class="process-section">
+          <div class="process-header">
+            <span class="eyebrow">How I Build</span>
+            <h3 class="process-title">From brief to live site.</h3>
+          </div>
+
+          <!-- TIMELINE TRACK: Horizontal scrolling container.
+               Each step is a card. The active card is highlighted by JS
+               as the user scrolls through the projects section. -->
+          <div class="process-track-wrap">
+            <!-- CONNECTING LINE: Horizontal line linking all step dots -->
+            <div class="process-line" aria-hidden="true">
+              <div class="process-line-fill" id="processLineFill"></div>
+            </div>
+
+            <div class="process-track" id="processTrack">
+
+              <!-- STEP 1 -->
+              <div class="process-step" data-step="1">
+                <div class="process-dot">
+                  <span class="process-dot-inner"></span>
+                </div>
+                <div class="process-card">
+                  <span class="process-number">01</span>
+                  <h4 class="process-step-title">Client Brief</h4>
+                  <p class="process-step-desc">
+                    Onboarding call and Google Form to capture brand, goals,
+                    target audience, and content assets before a single line is written.
+                  </p>
+                </div>
+              </div>
+
+              <!-- STEP 2 -->
+              <div class="process-step" data-step="2">
+                <div class="process-dot">
+                  <span class="process-dot-inner"></span>
+                </div>
+                <div class="process-card">
+                  <span class="process-number">02</span>
+                  <h4 class="process-step-title">Prototype</h4>
+                  <p class="process-step-desc">
+                    Rapid visual prototype built on Lovable.dev. Client sees
+                    a real preview link within 24 hours, no waiting on wireframes.
+                  </p>
+                </div>
+              </div>
+
+              <!-- STEP 3 -->
+              <div class="process-step" data-step="3">
+                <div class="process-dot">
+                  <span class="process-dot-inner"></span>
+                </div>
+                <div class="process-card">
+                  <span class="process-number">03</span>
+                  <h4 class="process-step-title">Refinement</h4>
+                  <p class="process-step-desc">
+                    VS Code and Claude Code handle final edits, custom interactions,
+                    and performance tuning after client feedback on the prototype.
+                  </p>
+                </div>
+              </div>
+
+              <!-- STEP 4 -->
+              <div class="process-step" data-step="4">
+                <div class="process-dot">
+                  <span class="process-dot-inner"></span>
+                </div>
+                <div class="process-card">
+                  <span class="process-number">04</span>
+                  <h4 class="process-step-title">Deploy</h4>
+                  <p class="process-step-desc">
+                    Site goes live on Netlify for preview. Client reviews on their
+                    actual domain via Hostinger after sign-off. Zero downtime handover.
+                  </p>
+                </div>
+              </div>
+
+              <!-- STEP 5 -->
+              <div class="process-step" data-step="5">
+                <div class="process-dot">
+                  <span class="process-dot-inner"></span>
+                </div>
+                <div class="process-card">
+                  <span class="process-number">05</span>
+                  <h4 class="process-step-title">Maintain</h4>
+                  <p class="process-step-desc">
+                    Monthly retainer covers updates, uptime monitoring via n8n,
+                    and domain renewal alerts. The site stays healthy after launch.
+                  </p>
+                </div>
+              </div>
+
+            </div><!-- end process-track -->
+          </div><!-- end process-track-wrap -->
+        </div><!-- end process-section -->
+      </div>
+    </section>
+
+
+    <!-- TRANSITION 3 TO 4 -->
+    <div class="transition-spacer" id="trans-3-4" aria-hidden="true">
+      <div class="transition-label">
+        <span class="tl-line"></span>
+        <span class="tl-text">Planner</span>
+        <span class="tl-line"></span>
+      </div>
+    </div>
+
+
+    <!-- ==========================================================
+         SECTION 4: ACADEMIC PLANNER
+         Entry animation: wipes in from the right.
+         Full task manager: add, complete, delete. All JS.
+         Satisfies: arrays, functions, DOM manipulation, event handling,
+         dynamic content updates, interactive task management.
+    ========================================================== -->
+    <section class="section sec-planner section-reveal slide-right" id="planner" aria-label="Academic Planner">
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow">Academic Planner</span>
+          <h2 class="section-title">Stay on track.</h2>
+          <p class="section-subtitle">Add tasks, mark them done, keep moving.</p>
+        </div>
+
+        <!-- ADD TASK AREA -->
+        <div class="planner-input-row">
+          <!-- INPUT: Text field for the new task -->
+          <input
+            type="text"
+            id="taskInput"
+            class="task-input"
+            placeholder="Add a new task..."
+            aria-label="New task"
+            maxlength="120"
+          />
+          <!-- SELECT: Priority level for the task -->
+          <select id="taskPriority" class="task-priority" aria-label="Task priority">
+            <option value="low">Low</option>
+            <option value="medium" selected>Medium</option>
+            <option value="high">High</option>
+          </select>
+          <button class="btn btn-primary" id="addTaskBtn">Add Task</button>
+        </div>
+
+        <!-- TASK FILTERS: Show all, active, or completed tasks -->
+        <div class="task-filters">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="active">Active</button>
+          <button class="filter-btn" data-filter="completed">Completed</button>
+        </div>
+
+        <!-- TASK LIST: JS injects <li> elements here -->
+        <ul class="task-list" id="taskList" aria-live="polite" aria-label="Task list">
+          <!-- Tasks rendered by JavaScript -->
+        </ul>
+
+        <!-- EMPTY STATE: Shown when no tasks exist -->
+        <p class="task-empty" id="taskEmpty">No tasks yet. Add one above.</p>
+
+        <!-- TASK COUNTER: Updates dynamically -->
+        <p class="task-counter" id="taskCounter"></p>
+      </div>
+    </section>
+
+
+    <!-- TRANSITION 4 TO 5 -->
+    <div class="transition-spacer" id="trans-4-5" aria-hidden="true">
+      <div class="transition-label">
+        <span class="tl-line"></span>
+        <span class="tl-text">Contact</span>
+        <span class="tl-line"></span>
+      </div>
+    </div>
+
+
+    <!-- ==========================================================
+         SECTION 5: CONTACT
+         Entry animation: fades up with a subtle scale.
+         Form with JS validation (no empty fields, valid email, digits-only phone).
+    ========================================================== -->
+    <section class="section sec-contact section-reveal scale-in" id="contact" aria-label="Contact">
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow">Contact</span>
+          <h2 class="section-title">Have a project<br/>in mind?</h2>
+          <p class="section-subtitle">Whether you need a business website or a custom automation, let's talk.</p>
+        </div>
+
+        <!-- CONTACT FORM: <form> is a required HTML element for this project.
+             novalidate disables browser default validation so our JS handles it. -->
+        <form class="contact-form" id="contactForm" novalidate>
+
+          <!-- NAME FIELD -->
+          <div class="form-group">
+            <label for="contactName" class="form-label">Full Name</label>
+            <input
+              type="text"
+              id="contactName"
+              name="name"
+              class="form-input"
+              placeholder="Your full name"
+              autocomplete="name"
+            />
+            <!-- Error message shown by JS if field fails validation -->
+            <span class="form-error" id="nameError" role="alert"></span>
+          </div>
+
+          <!-- EMAIL FIELD -->
+          <div class="form-group">
+            <label for="contactEmail" class="form-label">Email Address</label>
+            <input
+              type="email"
+              id="contactEmail"
+              name="email"
+              class="form-input"
+              placeholder="your@email.com"
+              autocomplete="email"
+            />
+            <span class="form-error" id="emailError" role="alert"></span>
+          </div>
+
+          <!-- PHONE FIELD -->
+          <div class="form-group">
+            <label for="contactPhone" class="form-label">Phone Number</label>
+            <input
+              type="tel"
+              id="contactPhone"
+              name="phone"
+              class="form-input"
+              placeholder="08012345678"
+              autocomplete="tel"
+            />
+            <span class="form-error" id="phoneError" role="alert"></span>
+          </div>
+
+          <!-- MESSAGE FIELD: <textarea> for multi-line input -->
+          <div class="form-group">
+            <label for="contactMessage" class="form-label">Message</label>
+            <textarea
+              id="contactMessage"
+              name="message"
+              class="form-input form-textarea"
+              placeholder="Tell me about your project..."
+              rows="5"
+            ></textarea>
+            <span class="form-error" id="messageError" role="alert"></span>
+          </div>
+
+          <button type="submit" class="btn btn-primary form-submit">Send Message</button>
+
+          <!-- SUCCESS MESSAGE: Hidden until form passes validation -->
+          <div class="form-success" id="formSuccess" role="alert" aria-live="polite">
+            Message sent! I'll get back to you within 24 hours.
+          </div>
+        </form>
+
+        <!-- CONTACT INFO: Hyperlinks (HTML requirement) -->
+        <div class="contact-links">
+          <a href="mailto:ayobolu.zion@example.com" class="contact-link">
+            <span class="contact-link-icon">&#9993;</span>
+            zedexayobolu@gmail.com
+          </a>
+          <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="contact-link">
+            <span class="contact-link-icon">&#9733;</span>
+            GitHub
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ============================================================
+       FOOTER: Semantic <footer> element with copyright and nav links.
+       <small> tags the copyright as fine print.
+  ============================================================ -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a href="#home" class="nav-logo">AZ<span class="logo-dot">.</span></a>
+      <ul class="footer-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#planner">Planner</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <small class="footer-copy">2025 Ayobolu Zion. All rights reserved.</small>
+    </div>
+  </footer>
+
+  <!-- MUSIC PROMPT OVERLAY: Slides up 1.5s after page load.
+       Satisfies browser autoplay policy, user must interact before audio plays.
+       Once they click "Turn On", music starts and overlay disappears.
+       3 seconds later, a highlight pulses around the navbar audio button. -->
+  <div class="music-prompt" id="musicPrompt" role="dialog" aria-label="Music prompt" aria-modal="true">
+    <div class="music-prompt-inner">
+      <div class="music-prompt-icon">&#9835;</div>
+      <div class="music-prompt-text">
+        <p class="music-prompt-title">This site has a soundtrack</p>
+        <p class="music-prompt-sub">Psalm 8 , Phil Wickham</p>
+      </div>
+      <div class="music-prompt-actions">
+        <button class="btn btn-primary music-prompt-yes" id="musicYes">Turn On</button>
+        <button class="music-prompt-no" id="musicNo">Maybe Later</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SINGLE JS FILE: All behaviour lives here -->
+  <script src="js/main.js"></script>
+</body>
+</html>
