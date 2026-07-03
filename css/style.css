@@ -344,19 +344,24 @@ h1, h2, h3, h4, h5, h6 {
    Each section is full viewport height minimum.
    They stack vertically in one scrollable document.
 ================================================================ */
+/* SECTION BASE: No forced min-height on non-home sections.
+   Only sec-home gets a fixed height. All others size to content. */
 .section {
   position: relative;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   overflow: hidden;
 }
 
+/* Home section is the only one that fills the full viewport */
+/* .sec-home height is set separately below */
+
 /* Non-home sections get top padding to clear the fixed navbar */
+/* Non-home sections: tighter vertical padding */
 .section:not(.sec-home) {
-  padding-top: calc(var(--nav-height) + var(--space-xl));
-  padding-bottom: var(--space-3xl);
+  padding-top: calc(var(--nav-height) + var(--space-lg));
+  padding-bottom: var(--space-2xl);
 }
 
 
@@ -367,9 +372,10 @@ h1, h2, h3, h4, h5, h6 {
    horizontal line draws across the screen.
    This gives a distinct "chapter break" feel between sections.
 ================================================================ */
+/* TRANSITION SPACER: reduced height so sections feel closer */
 .transition-spacer {
   position: relative;
-  height: 40vh;
+  height: 20vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -466,48 +472,44 @@ h1, h2, h3, h4, h5, h6 {
 ================================================================ */
 .sec-home {
   display: grid;
-  /* Left column takes remaining space, right column is auto (orbital size) */
   grid-template-columns: 1fr auto;
-  grid-template-rows: 1fr auto; /* Row 1: main content, Row 2: skills strip */
+  /* Row 1: content fills remaining height. Row 2: skills strip auto height. */
+  grid-template-rows: 1fr auto;
   align-items: center;
-  padding: var(--nav-height) var(--space-2xl) 0;
-  gap: 0 var(--space-xl);
-  min-height: 100vh;
+  padding: var(--nav-height) var(--space-xl) 0 var(--space-xl);
+  gap: 0 var(--space-lg);
+  /* 100vh so home fills the screen, but doesn't force extra space below */
+  height: 100vh;
+  max-height: 100vh;
 }
 
-/* Hero content occupies left column, full height row 1 */
+/* Hero content: left column, vertically centred */
 .hero-content {
   position: relative;
   z-index: 2;
-  padding-left: clamp(0px, 2vw, 32px);
+  padding-left: 0;
   padding-top: var(--space-xl);
-  /* Align content to vertical centre of the left column */
   display: flex;
   flex-direction: column;
   justify-content: center;
+  /* Prevent text from growing too wide and overlapping the orbital */
+  max-width: 620px;
+  min-width: 0; /* Allows flex/grid child to shrink below content size */
 }
 
-/* Orbital sits in the right column, row 1 */
+/* Orbital: right column */
 .hero-orbital {
   grid-column: 2;
   grid-row: 1;
 }
 
-/* Skills strip spans both columns in row 2 */
+/* Skills strip: spans full width in row 2 */
 .skills-strip {
   grid-column: 1 / -1;
   grid-row: 2;
 }
 
-/* Scroll indicator stays absolute over row 1 */
-.scroll-indicator {
-  grid-column: 1;
-  grid-row: 1;
-  align-self: end;
-  justify-self: start;
-  margin-bottom: 90px;
-  margin-left: clamp(var(--space-lg), 4vw, 80px);
-}
+/* Scroll indicator: handled below in its own block */
 
 .hero-greeting {
   font-family: var(--font-display);
@@ -655,15 +657,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* SKILLS STRIP: At the bottom of the home section */
+/* SKILLS STRIP: lives in grid row 2 of sec-home (not absolute).
+   It naturally sits below the hero content inside the grid. */
 .skills-strip {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
   padding: var(--space-md) 0;
   border-top: 1px solid var(--border);
   overflow: hidden;
   -webkit-mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
   mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
   z-index: 2;
+  width: 100%;
 }
 
 .skills-track {
@@ -704,14 +707,13 @@ h1, h2, h3, h4, h5, h6 {
 
 .skill-tag:hover { color: var(--mint); border-color: var(--mint); }
 
-/* SCROLL INDICATOR */
+/* SCROLL INDICATOR: inline element below the CTA buttons.
+   Sits in the normal flex flow of hero-content, no absolute positioning. */
 .scroll-indicator {
-  position: absolute;
-  bottom: 80px; /* Above the skills strip */
-  left: clamp(var(--space-lg), 4vw, 80px);
   display: flex;
   align-items: center;
   gap: var(--space-sm);
+  margin-top: var(--space-lg);
   z-index: 3;
 }
 
@@ -1395,19 +1397,39 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width: 1024px) {
   :root { --space-3xl: 5rem; --space-2xl: 3rem; }
 
-  .about-grid { grid-template-columns: 260px 1fr; gap: var(--space-xl); }
+  /* Tighten hero padding on tablet */
+  .sec-home {
+    padding: var(--nav-height) var(--space-lg) 0 var(--space-lg);
+    gap: 0 var(--space-md);
+  }
+
+  /* Smaller orbital on tablet so text has more room */
+  .hero-orbital {
+    width: clamp(240px, 38vw, 340px);
+  }
+
+  /* Name scales down a touch on tablet */
+  .hero-name {
+    font-size: clamp(2.2rem, 5.5vw, 72px);
+  }
+
+  .about-grid { grid-template-columns: 240px 1fr; gap: var(--space-xl); }
 
   .hero-side-text { display: none; }
-
-  .hero-ring { opacity: 0.04; width: 70vw; right: -20%; }
 }
 
-/* MOBILE */
+/* ================================================================
+   MOBILE (max-width: 768px)
+   Hero switches from two-column grid to single-column stack.
+   Orbital moves to the TOP of the hero, centred.
+   Text sits below it, also centred.
+   Everything is constrained to the viewport width.
+================================================================ */
 @media (max-width: 768px) {
+
+  /* NAVBAR */
   .navbar { padding: 0 var(--space-md); }
-
   .nav-toggle { display: flex; }
-
   .nav-links {
     position: fixed;
     top: var(--nav-height); left: 0; right: 0;
@@ -1421,38 +1443,156 @@ h1, h2, h3, h4, h5, h6 {
     transform: translateY(-10px);
     transition: all var(--transition-slow);
   }
-
   .nav-links.open { opacity: 1; pointer-events: all; transform: translateY(0); }
-
   .audio-track-name { display: none; }
   .audio-wave { display: none; }
   .nav-audio { margin-left: var(--space-sm); }
 
+  /* HERO: Switch to single column flex, stacked vertically */
   .sec-home {
-    padding: var(--nav-height) var(--space-md) 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: calc(var(--nav-height) + var(--space-lg)) var(--space-md) 100px;
+    gap: var(--space-lg);
+    text-align: center;
+    /* Prevent any horizontal overflow */
+    overflow-x: hidden;
+    width: 100%;
   }
 
-  .hero-cta { flex-direction: column; align-items: flex-start; }
+  /* ORBITAL: Show on mobile, sits at the top, smaller size */
+  .hero-orbital {
+    display: block !important; /* Override the hide rule */
+    position: relative;
+    width: min(260px, 70vw);
+    grid-column: unset;
+    grid-row: unset;
+    order: -1; /* Orbital comes first (above the text) */
+    margin: 0 auto;
+    flex-shrink: 0;
+  }
 
+  /* HERO CONTENT: Full width, centred text */
+  .hero-content {
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+    align-items: center; /* Centre all children */
+  }
+
+  /* GREETING: Centre the tick line */
+  .hero-greeting {
+    justify-content: center;
+    font-size: var(--text-base);
+  }
+
+  /* NAME: Smaller on mobile so it stays on one line */
+  .hero-name {
+    font-size: clamp(2rem, 9vw, 2.8rem);
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  /* TYPEWRITER ROW: Centre it */
+  .hero-typewriter-row {
+    justify-content: center;
+    font-size: var(--text-xl);
+  }
+
+  /* DESCRIPTION: Full width, readable */
+  .hero-description {
+    font-size: var(--text-base);
+    max-width: 100%;
+    text-align: center;
+  }
+
+  /* CTA BUTTONS: Stack and centre */
+  .hero-cta {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .hero-cta .btn {
+    width: 100%;
+    justify-content: center;
+    max-width: 300px;
+  }
+
+  /* SCROLL INDICATOR: Hide on mobile, not needed */
+  .scroll-indicator { display: none; }
+
+  /* SKILLS STRIP: Ensure it sits at bottom of flex column */
+  .skills-strip {
+    position: relative;
+    width: 100%;
+    grid-column: unset;
+    grid-row: unset;
+    margin-top: auto;
+  }
+
+  /* ABOUT */
   .about-grid { grid-template-columns: 1fr; }
   .about-photo-col { order: -1; max-width: 280px; margin: 0 auto; }
 
+  /* PROJECTS */
   .project-row { grid-template-columns: 48px 1fr; }
   .project-thumb { display: none; }
   .project-arrow { display: none; }
 
+  /* PLANNER */
   .planner-input-row { flex-direction: column; }
 
+  /* FOOTER */
   .footer-inner { flex-direction: column; align-items: center; text-align: center; }
   .footer-links { flex-wrap: wrap; justify-content: center; }
 
-  .transition-spacer { height: 25vh; }
+  /* TRANSITIONS: Shorter gaps between sections on mobile */
+  .transition-spacer { height: 18vh; }
 }
 
 /* SMALL PHONES */
 @media (max-width: 480px) {
   :root { --space-lg: 1.25rem; --space-md: 1rem; }
+
+  .hero-name {
+    font-size: clamp(1.8rem, 8vw, 2.4rem);
+  }
+
+  .hero-orbital {
+    width: min(220px, 65vw);
+  }
+
   .contact-links { flex-direction: column; gap: var(--space-md); }
+
+  /* Music prompt: full width on small phones */
+  .music-prompt {
+    width: calc(100vw - 1.5rem);
+    bottom: var(--space-md);
+  }
+}
+
+/* NARROW LAPTOP (769px - 960px): tightest squeeze point */
+@media (min-width: 769px) and (max-width: 960px) {
+  .sec-home {
+    grid-template-columns: 1fr 280px;
+    padding: var(--nav-height) var(--space-md) 0 var(--space-md);
+    gap: 0 var(--space-md);
+  }
+
+  .hero-name {
+    font-size: clamp(2rem, 4.5vw, 56px);
+  }
+
+  .hero-orbital {
+    width: 280px;
+  }
+
+  .hero-description {
+    font-size: var(--text-base);
+  }
 }
 
 
